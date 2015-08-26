@@ -39,7 +39,7 @@ int main( int argc, char** argv )
     diff = original - background;
 
     // write the image
-    imwrite(argv[4], diff);
+    imwrite(argv[3], diff);
     
     return 0;
 }
