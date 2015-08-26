@@ -27,7 +27,7 @@ int main( int argc, char** argv )
 	  original   = imread(argv[1], 1);
 	  
 	  // second parameter is background image
-	  background = imread(argv[2], 1)
+	  background = imread(argv[2], 1);
 
     // check if images are loaded successfully
     if(!original.data || !background.data) {
