@@ -6,3 +6,6 @@ target_link_libraries( Analysis ${OpenCV_LIBS} )
 
 add_executable( Subtract Subtract.cpp )
 target_link_libraries( Subtract ${OpenCV_LIBS} )
+
+add_executable( BackgroundCreator/BackgroundCreator BackgroundCreator/BackgroundCreator.cpp )
+target_link_libraries( BackgroundCreator/BackgroundCreator ${OpenCV_LIBS} )
