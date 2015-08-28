@@ -19,6 +19,7 @@ int main( int argc, char** argv )
     Mat original, background, diff, out;
     unsigned int i, j;
     float distance, threshold;
+    unsigned int numOfBeamPixel = 0;
 
     if(argc != 5) {
 	      printf("Number of parameters must be 3.\n");
@@ -29,7 +30,7 @@ int main( int argc, char** argv )
     // first input is original image
     original   = imread(argv[1], 1);
     // cvtColor(original , gray_original , CV_BGR2GRAY);
-
+    
     // second parameter is background image
     background = imread(argv[2], 1);
     // cvtColor(background , gray_background , CV_BGR2GRAY);
@@ -42,21 +43,28 @@ int main( int argc, char** argv )
         return -1;
     }
 
-    diff = original - background;
+    //diff = original - background;
+    absdiff(original, background, diff);
 
     out = Mat::zeros(diff.rows, diff.cols, CV_8UC3);
 
     for(i = 0; i < original.rows; i++)
       for(j = 0; j < original.cols; j++) {
             Vec3b pix = diff.at<Vec3b>(i, j);
+            // distance in 3D RGB space!
             distance  =  sqrt(pix[0]*pix[0]+pix[1]*pix[1]+pix[2]*pix[2]);
             if(distance > threshold) {
+                // put a counter here
                 out.at<Vec3b>(i, j) = original.at<Vec3b>(i, j);
+                numOfBeamPixel = numOfBeamPixel + 1;
             }
         }
 
     // write the image
     imwrite(argv[4], out);
+
+    printf("number of beam pixel~: %d\n", numOfBeamPixel);
+    printf("number of background pixels: %d\n", original.cols*original.rows - numOfBeamPixel);
 
     return 0;
 }
