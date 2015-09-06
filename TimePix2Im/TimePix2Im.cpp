@@ -14,7 +14,7 @@ using namespace cv;
 
 int main(int argc, char ** argv) {
     vector<unsigned int> fromTimePix;
-    unsigned char * ptr;
+    unsigned char * ptr, tmp;
     int i, j;
     float max;
 
@@ -40,14 +40,19 @@ int main(int argc, char ** argv) {
         counter ++;
     }
 
+    if(fromTimePix.size() != TIMEPIX_MAX) {
+        cout << "Length of the vector does not equal to TIMEPIX_MAX\n";
+        return 1;
+    }
+
     max = 1;
     // find the max for the normalization
     for(int i = 0; i < TIMEPIX_HEIGHT; i ++) {
         for(int j = 0; j < TIMEPIX_WIDTH; j++) {
-            if(fromTimePix[i * TIMEPIX_WIDTH + j] > max) max = ptr[j];
+            tmp = fromTimePix[i * TIMEPIX_WIDTH + j];
+            if(tmp > max) max = tmp;
         }
     }
-                         
 
     Mat output;
     output = Mat::zeros(TIMEPIX_WIDTH, TIMEPIX_HEIGHT, CV_8UC1);
